@@ -288,3 +288,33 @@ FROM employees e
 WHERE e.num IN (SELECT DISTINCT manager FROM employees)
 AND start_date < DATE_SUB(CURDATE(), INTERVAL 5 YEAR)
 ORDER BY years DESC;
+
+
+
+
+
+
+
+
+
+--extraer hora 
+
+SELECT EXTRACT(HOUR FROM end_datetime) AS hour, COUNT(*) AS count
+FROM your_table
+GROUP BY hour
+ORDER BY hour;
+
+--extraer dia
+
+SELECT EXTRACT(DAY FROM end_datetime) AS day, COUNT(*) AS count
+FROM your_table
+GROUP BY day
+ORDER BY day;
+
+
+--extraer mes
+
+SELECT EXTRACT(MONTH FROM end_datetime) AS month, COUNT(*) AS count
+FROM your_table
+GROUP BY month
+ORDER BY month;

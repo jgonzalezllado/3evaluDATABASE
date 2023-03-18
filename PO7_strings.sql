@@ -75,8 +75,8 @@ SELECT CONCAT_WS(' ', name, surname) AS full_name
 FROM employees;
 
 
-Concat the name and surname of the employees using the separator ' ' using the function CONCAT_WS.
-MariaDB:
+--Concat the name and surname of the employees using the separator ' ' using the function CONCAT_WS.
+--MariaDB:
 
 
 
@@ -119,47 +119,46 @@ SELECT IF(
    POSITION('A' IN SUBSTRING(surname, POSITION('A' IN surname)+1))+POSITION('A' IN surname),
    'Second A not found'
 ) as position_of_second_a FROM employees;
-Return the full name of the employees with the next format:
+
+
+--Return the full name of the employees with the next format:
 MariaDB:
-
-
 
 SELECT CONCAT_WS(', ', surname, name) as full_name FROM employees;
-Postgre:
 
-
+--Postgre:
 
 SELECT CONCAT(surname, ', ', name) as full_name FROM employees;
-Select all the full names of the databases but changing ’IO’ for ‘IOTE’. NOTE THAT: If you do this using a string function in a SELECT clause, you don’t change the data stored in the database…
-MariaDB:
 
+--Select all the full names of the databases but changing ’IO’ for ‘IOTE’. NOTE THAT: If you do this using a string function in a SELECT clause, you don’t change the data stored in the database…
+--MariaDB:
 
 
 SELECT REPLACE(CONCAT_WS(' ', name, surname), 'IO', 'IOTE') as full_name FROM employees;
-Postgre:
 
 
+--Postgre:
 
 SELECT REPLACE(CONCAT(name, ' ', surname), 'IO', 'IOTE') as full_name FROM employees;
-Update all the names like Antonio or Antonia with Tonio or Tonia. You must use UPDATE and the function REPLACE (only a single sentence).
-MariaDB:
 
-
-
-UPDATE employees SET name = REPLACE(name, 'Ant', 'T'), surname = REPLACE(surname, 'Ant', 'T') WHERE name LIKE 'Ant%' OR surname LIKE 'Ant%';
-Postgre:
-
-
+----Update all the names like Antonio or Antonia with Tonio or Tonia. You must use UPDATE and the function REPLACE (only a single sentence).
+--MariaDB:
 
 UPDATE employees SET name = REPLACE(name, 'Ant', 'T'), surname = REPLACE(surname, 'Ant', 'T') WHERE name LIKE 'Ant%' OR surname LIKE 'Ant%';
-Show the surnames of the employees with an underscore after the second char.
-MariaDB:
 
 
+--Postgre:
+UPDATE employees SET name = REPLACE(name, 'Ant', 'T'), surname = REPLACE(surname, 'Ant', 'T') WHERE name LIKE 'Ant%' OR surname LIKE 'Ant%';
+
+--Show the surnames of the employees with an underscore after the second char.
+
+--MariaDB:
 
 SELECT CONCAT(SUBSTRING(surname, 1, 2), '_', SUBSTRING(surname, 3)) as surname_with_underscore FROM employees;
 Postgre:
 
 
 
-SELECT CONCAT(SUBSTRING(surname, 1, 2), '_', SUBSTRING(s
+SELECT surname, 
+       substring(surname FROM 1 FOR 2) || '_' || substring(surname FROM 3) AS last_name_formatted 
+FROM employees;

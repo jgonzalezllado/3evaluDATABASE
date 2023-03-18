@@ -1,0 +1,63 @@
+24,25,26,27
+
+
+
+--24
+--(Window function, PostgreSQL only) Show the fields dept_num, num, and salary of the relation 'employees'. But you must also show another column with the average salary of the employees' departments.
+--PostgreSQL
+
+
+SELECT dept_num, num, salary, avg(salary) OVER (PARTITION BY dept_num) AS avg_salary
+FROM employees;
+
+
+
+--25. (Window function, PostgreSQL only) Do the same query than in exercise 25, but now showing the department name. Order the results by department name.
+--PostgreSQL
+
+
+SELECT d.name AS dept_name, e.num, e.salary, avg(e.salary) OVER (PARTITION BY d.name) AS avg_salary
+FROM employees e
+JOIN departments d ON e.dept_num = d.num
+ORDER BY d.name;
+
+
+
+--26. (Window function, PostgreSQL only) Show a list of employees name, surname, and start_date, but also with each row containing the total employee count. Order the results by start_date.
+--PostgreSQL
+
+SELECT name, surname, start_date, count(*) OVER () AS COUNT_EMPLOYEES
+FROM employees
+ORDER BY start_date;
+
+
+
+--27. (Window function, PostgreSQL only) Show an increasing numbered list of employees, ordered by the date that they started working in the company.
+--ostgreSQL
+
+select
+  row_number() over (order by start_date) as row_number,
+  name,
+  surname
+from employees;
+
+
+
+
+ejemplo 1:
+Calcular el salario máximo y mínimo de cada empleado en su departmto
+
+
+select
+  e.num,
+  e.name,
+  e.surname,
+  d.name,
+  max(e.salary) over (partition by e.dept_num order by e.salary rows between unbounded preceding and unbounded following) as max_salary,
+  min(e.salary) over (partition by e.dept_num order by e.salary rows between unbounded preceding and unbounded following) as min_salary
+from employees e
+join departments d on e.dept_num = d.num;
+
+ejemplo 2:
+
+SELECT name, salary, MAX(salary) OVER (ORDER BY num ROWS BETWEEN CURRENT ROW AND 2 FOLLOWING) AS max_salary FROM employees;
